@@ -1,0 +1,61 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.section {
+    position: relative;
+    margin: auto;
+    width: 1044px;
+    display: flex;
+    flex-flow: column nowrap;
+    box-sizing: border-box;
+    border-right: 4px solid red;
+    transition: 200ms;
+}
+
+.section:hover {
+    border-right: 6px solid red;
+    transition: 200ms;
+}
+
+.section-name {
+    font-size: 1.75em;
+    font-family: Impact;
+}
+
+.section-thought {
+    font-size: 1.5em;
+    font-family: Calibri;
+}
+
+.album {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow: auto;
+    display: flex;
+    flex-flow: row wrap;
+    /*justify-content: center;*/
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.album-photo {
+    position: relative;
+    width: 500px;
+    height: 400px;
+    overflow: hidden;
+    padding: 10px;
+    border: 3px solid #FFAFCC;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.album-photo img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
