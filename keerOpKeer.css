@@ -1,0 +1,150 @@
+.game {
+    display: flex;
+    flex-flow: row nowrap;
+    column-gap: 50px;
+    width: 1200px;
+}
+
+.table {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 20px;
+    flex-grow: 15;
+}
+
+.main-table, .column-names, .column-points {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    width: 100%;
+}
+
+.main-table {
+    grid-template-rows: repeat(7, 1fr);
+}
+
+.column-names {
+    grid-template-rows: 1fr;
+}
+
+.column-points {
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.column-names>div, .column-points>div {
+    font-family: Playwrite;
+    font-size: 1.5em;
+    border: 1px solid black;
+}
+
+.tile {
+    aspect-ratio: 1/1;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 1px;
+}
+
+.tile>div {
+    position: relative;
+    height: 70%;
+    width: 70%;
+    border-radius: 50%;
+}
+
+[class^="tile-"]:after {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    height: 70%;
+    width: 70%;
+    border-radius: 50%;
+}
+
+.tile-green {
+    background-color: #A5DC61;
+}
+
+.tile-green>div {
+    background-color: #BFFF72;
+}
+
+.tile-yellow {
+    background-color: #F6DD5E;
+}
+
+.tile-yellow>div {
+    background-color: #FFE97C;
+}
+
+.tile-blue {
+    background-color: #6AC5E3;
+}
+
+.tile-blue>div {
+    background-color: #98E4FD;
+}
+
+.tile-orange {
+    background-color: #FF9D5B;
+}
+
+.tile-orange>div {
+    background-color: #FFB787;
+}
+
+.tile-red {
+    background-color: #FF4958;
+}
+
+.tile-red>div {
+    background-color: #FF6774;
+}
+
+.star>div {
+    position: relative;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    border-radius: 0; !important
+}
+
+.overview {
+    flex-grow: 2;
+}
+
+.overview-colors {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+.overview-colors>div {
+    font-family: Playwrite;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.overview-colors .tile-green {
+    background-color: #BFFF72;
+    color: #A5DC61; !important;
+}
+
+.overview-colors .tile-yellow {
+    background-color: #FFE97C;
+    color: #F6DD5E;
+}
+
+.overview-colors .tile-blue {
+    background-color: #98E4FD;
+    color: #6AC5E3;
+}
+
+.overview-colors .tile-orange {
+    background-color: #FFB787;
+    color: #FF9D5B;
+}
+
+.overview-colors .tile-red {
+    background-color: #FF6774;
+    color: #FF4958;
+}

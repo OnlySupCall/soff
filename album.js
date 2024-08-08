@@ -18,3 +18,14 @@ function restart(button) {
     source.currentTime = 0;
     source.play();
 }
+
+// const [red, green, blue] = [100, 100, 100]
+// const section1 = document;
+//
+// document.addEventListener("scroll", () => {
+//     let height = window.innerHeight;
+//     let y = 1 + (window.scrollY || window.pageYOffset);
+//     let ratio = (height-y)/height;
+//     let color = [255*ratio, 255*ratio, 255*ratio].map(Math.round);
+//     document.body.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+// })
