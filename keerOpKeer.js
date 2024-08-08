@@ -5,13 +5,45 @@ let numberDye = null;
 let number = 4;
 let color = "red";
 let dice = setupDice();
-let diceValues = [];
+let diceValues = ["green", "blue", "orange", 1, 5, 3];
 let crossedMatrix = setupCrossedMatrix();
 let crossedTiles = [];
 
 let selectedTiles = [];
 
 const ws = new WebSocket("ws://localhost:8082");
+ws.addEventListener("open", () => {
+    console.log("The connection is open!");
+})
+
+ws.addEventListener("message", message => {
+    console.log(message);
+    let data = JSON.parse(message.data);
+
+    switch (data.type) {
+        case "command":
+            handleCommand(data);
+    }
+});
+
+function handleCommand(data) {
+    switch(data.command) {
+        case "receiveDice":
+            receiveDice(data);
+    }
+}
+
+function receiveDice(data) {
+    for (let i = 0; i < 3; i++) {
+        dice[i].classList.remove(diceValues[i]);
+        diceValues[i] = data.diceValues[i]
+        dice[i].classList.add(diceValues[i]);
+    }
+    for (let i = 3; i < 6; i++) {
+        diceValues[i] = data.diceValues[i]
+        dice[i].innerHTML = diceValues[i];
+    }
+}
 
 function setupCrossedMatrix() {
     let crossedMatrix = [];
@@ -37,16 +69,6 @@ function throwDice() {
     areDiceThrown = true;
     let message = {"type": "command", "command": "throwDice"};
     ws.send(JSON.stringify(message));
-}
-
-function receiveDice(message) {
-    for (let i = 0; i < 3; i++) {
-        dice[i].classList.remove(diceValues[i]);
-        dice[i].classList.add(message["diceValues"][i]);
-    }
-    for (let i = 3; i < 6; i++) {
-        dice[i].text = message["diceValues"][i];
-    }
 }
 
 function selectDye(dye) {
@@ -116,6 +138,12 @@ function deselectTile(tile) {
             return;
         }
     }
+}
+
+function lockTiles() {
+    if (selectedTiles.length != number) return;
+    let message = {"type": "command", "command": "lockTiles", "selectedTiles": selectedTiles};
+    ws.send(JSON.stringify(message));
 }
 
 function isAdjacent(tile1, tile2) {
