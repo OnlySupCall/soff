@@ -10,35 +10,37 @@ body {
     display: flex;
     flex-flow: column nowrap;
     box-sizing: border-box;
-    border-right: 4px solid red;
-    transition: 200ms;
-}
-
-.section:hover {
-    border-right: 6px solid red;
-    transition: 200ms;
+    border-right: 4px solid #F26A8D;
 }
 
 .section-name {
     font-size: 1.75em;
-    font-family: Impact;
+    font-family: Playwrite;
+    margin: 20px 20px 0 0;
 }
 
 .section-thought {
     font-size: 1.5em;
-    font-family: Calibri;
+    font-family: Playwrite;
+    margin: 10px 20px 20px 0;
 }
 
 .album {
     position: relative;
     width: 100%;
-    max-height: 500px;
+    max-height: 450px;
     overflow: auto;
     display: flex;
     flex-flow: row wrap;
     /*justify-content: center;*/
     column-gap: 20px;
     row-gap: 20px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.album::-webkit-scrollbar {
+    display: none; /* Safari, Chrome and Opera */
 }
 
 .album-photo {
@@ -47,7 +49,7 @@ body {
     height: 400px;
     overflow: hidden;
     padding: 10px;
-    border: 3px solid #FFAFCC;
+    border: 3px solid #F26A8D;
     border-radius: 20px;
     box-sizing: border-box;
 }
@@ -58,4 +60,49 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+}
+
+.player {
+    display: flex;
+    flex-flow: row wrap;
+    column-gap: 5px;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.player-title {
+    font-family: Playwrite;
+    margin: 10px 0;
+    font-size: 1.5em;
+    flex-grow: 1;
+}
+
+.player button {
+    font-size: 1.5em;
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 20px;
+    font-family: Calibri;
+    outline: none;
+    transition: 100ms;
+}
+
+.player button:hover {
+    transition: 100ms;
+    background-color: #880D1E;
+}
+
+.play:after {
+    content: "Play";
+}
+
+.pause:after {
+    content: "Pause";
+}
+
+.restart:after {
+    content: "Restart"
 }

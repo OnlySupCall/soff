@@ -1,0 +1,23 @@
+@font-face {
+    font-family: Playwrite;
+    font-weight: normal;
+    src: url("fontovi/PlaywriteHR-Regular.ttf");
+}
+
+@font-face {
+    font-family: Playwrite;
+    font-weight: 100;
+    src: url("fontovi/PlaywriteHR-ExtraLight.ttf");
+}
+
+@font-face {
+    font-family: Playwrite;
+    font-weight: 200;
+    src: url("fontovi/PlaywriteHR-Light.ttf");
+}
+
+@font-face {
+    font-family: Playwrite;
+    font-weight: 300;
+    src: url("fontovi/PlaywriteHR-Thin.ttf");
+}
