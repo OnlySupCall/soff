@@ -1,7 +1,7 @@
 .game {
     display: flex;
     flex-flow: row nowrap;
-    column-gap: 50px;
+    column-gap: 25px;
     width: 1200px;
 }
 
@@ -9,7 +9,7 @@
     display: flex;
     flex-flow: column nowrap;
     row-gap: 20px;
-    flex-grow: 15;
+    flex: 15;
 }
 
 .main-table, .column-names, .column-points {
@@ -109,7 +109,10 @@
 }
 
 .overview {
-    flex-grow: 2;
+    flex: 2;
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 5px;
 }
 
 .overview-colors {
@@ -147,4 +150,94 @@
 .overview-colors .tile-red {
     background-color: #FF6774;
     color: #FF4958;
+}
+
+.overview-points {
+    flex-basis: 100%;
+    aspect-ratio: 2/1;
+    border: 1px solid black;
+    box-sizing: border-box;
+    border-radius: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: Playwrite;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.remaining-jokers {
+    flex: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+.remaining-jokers>div {
+    aspect-ratio: 1/1;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Playwrite;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.dice {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: stretch;
+    row-gap: 10px;
+    flex: 1;
+}
+
+.dice>div {
+    aspect-ratio: 1/1;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-dye:after {
+    content: " ";
+    position: relative;
+    width: calc(100% - 15px);
+    height: calc(100% - 15px);
+    border-radius: 10px;
+}
+
+.color-dye.green:after {
+    background-color: #A5DC61;
+}
+
+.color-dye.yellow:after {
+    background-color: #F6DD5E;
+}
+
+.color-dye.blue:after {
+    background-color: #6AC5E3;
+}
+
+.color-dye.red:after {
+    background-color: #FF4958;
+}
+
+.color-dye.orange:after {
+    background-color: #FF9D5B;
+}
+
+.number-dye {
+    font-family: Playwrite;
+    font-size: 1.2em;
+    font-weight: bold;
 }
