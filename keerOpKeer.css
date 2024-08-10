@@ -384,6 +384,10 @@
     .game-window {
         width: 800px;
     }
+
+    .overview-points {
+        font-size: 0.5em;
+    }
 }
 
 @media only screen and (max-width: 900px) {
