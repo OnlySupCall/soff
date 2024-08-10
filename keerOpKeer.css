@@ -356,6 +356,7 @@
     .overview-points {
         padding: 3px;
         border-radius: 10px;
+        font-size: 0.4em;
     }
 
     .column-names>div, .column-points>div {
@@ -364,10 +365,6 @@
 
     .overview-colors>div {
         font-size: 1em;
-    }
-
-    .overview-points {
-        font-size: 0.4em;
     }
 
     .remaining-jokers>div {
@@ -404,22 +401,19 @@
 
     .overview-points {
         padding: 3px;
+        font-size: 0.25em;
     }
 
     .column-names>div, .column-points>div {
-        font-size: 0.5em;
+        font-size: 0.4em;
     }
 
     .overview-colors>div {
-        font-size: 0.5em;
-    }
-
-    .overview-points {
-        font-size: 0.35em;
+        font-size: 0.4em;
     }
 
     .remaining-jokers>div {
-        font-size: 0.5em;
+        font-size: 0.4em;
     }
 
     .number-dye {
