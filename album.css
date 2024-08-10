@@ -211,6 +211,14 @@ body {
         width: 444px;
     }
 
+    .section-name {
+        font-size: 1.25em;
+    }
+
+    .section-thought {
+        font-size: 1em;
+    }
+
     .album {
         max-height: 250px;
     }
@@ -222,6 +230,14 @@ body {
 
     .heart-stripe {
         width: 400px;
+    }
+
+    .player-title {
+        font-size: 1.1em;
+    }
+
+    .player>button {
+        font-size: 1.1em;
     }
 }
 
