@@ -2,7 +2,7 @@
     display: flex;
     flex-flow: row nowrap;
     column-gap: 25px;
-    width: 1200px;
+    width: 100%;
 }
 
 .table {
@@ -293,4 +293,75 @@
     color: #464646;
     cursor: default;
     pointer-events: none;
+}
+
+.game-window {
+    position: relative;
+    width: 1200px;
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 20px;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.game-window button {
+    font-family: Playwrite;
+    font-size: 1.25em;
+    color: white;
+    background-color: black;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+.game-window button:hover {
+    background-color: #880D1E;
+}
+
+@media only screen and (max-width: 1300px) {
+    .game-window {
+        width: 1000px;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .game-window {
+        width: 800px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .game-window {
+        width: 600px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .game-window {
+        width: 550px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .game-window {
+        width: 500px;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .game-window {
+        width: 450px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .game-window {
+        width: 250px;
+    }
 }

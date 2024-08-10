@@ -20,8 +20,23 @@ let crossedTiles = [];
 let selectedTiles = [];
 let selectedTilesDOM = [];
 
+let starMatrix = setupStarMatrix();
+
 let columnsDOM = setupColumns();
 let colorsDOM = setupColors();
+
+let pointsColorBonus = 0;
+let pointsColumnBonus = 0;
+let pointsJokerBonus = 8;
+let pointsStarPenalty = 30;
+let pointsTotal = -30;
+
+let pointsDOM = setupPoints();
+
+const columnRewards = [
+    [5, 3, 3, 3, 2, 2, 2, 1, 2, 2, 2, 3, 3, 3, 5],
+    [3, 2, 2, 2, 1, 1, 1, 0, 1, 1, 1, 2, 2, 2, 3]
+];
 
 const ws = new WebSocket("ws://localhost:8082");
 ws.addEventListener("open", () => {
@@ -67,6 +82,12 @@ ws.addEventListener("message", message => {
             break;
         case 11:
             circleColor(data);
+            break;
+        case 12:
+            winOrLoss(data);
+            break;
+        case 13:
+            handleDraw();
             break;
     }
 });
@@ -186,6 +207,18 @@ function setupCrossedMatrix() {
     return crossedMatrix;
 }
 
+function setupStarMatrix() {
+    return [
+        [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+    ];
+}
+
 function setupDice() {
     let dice = [];
     for (let i = 0; i < 6; i++) {
@@ -222,6 +255,16 @@ function setupColors() {
     colorsDOM["color-orange"] = document.getElementById("color-orange");
 
     return colorsDOM;
+}
+
+function setupPoints() {
+    let pointsDOM = {}
+    pointsDOM.colorBonus = document.getElementById("colorBonus");
+    pointsDOM.columnBonus = document.getElementById("columnBonus");
+    pointsDOM.jokerBonus = document.getElementById("jokerBonus");
+    pointsDOM.starPenalty = document.getElementById("starPenalty");
+    pointsDOM.pointTotal = document.getElementById("pointsTotal");
+    return pointsDOM;
 }
 
 function selectTile(tile) {
@@ -325,6 +368,12 @@ function crossTileSelection() {
         tile.classList.add("tile-crossed");
     }
 
+    let cnt = 0;
+    for (let tile of selectedTiles) {
+        if (starMatrix[tile.y][tile.x]) cnt++;
+    }
+    updateStarPenalty(cnt);
+
     crossedTiles.push(...selectedTiles);
     selectedTiles = [];
     selectedTilesDOM = [];
@@ -367,6 +416,8 @@ function crossColumn(data) {
     } else {
         columnsDOM[1][data.column].classList.add("tile-crossed");
     }
+
+    updateColumnBonus(data.column, data.maxPoints);
 }
 
 function circleColumn(data) {
@@ -383,10 +434,56 @@ function crossColor(data) {
     } else {
         colorsDOM["color-" + data.color].classList.add("tile-crossed");
     }
+
+    updateColorBonus(data.maxPoints);
 }
 
 function circleColor(data) {
     if (!data.hasOwnProperty("color")) return;
 
     colorsDOM["colorMax-" + data.color].classList.add("tile-circled");
+}
+
+function updateTotalPoints() {
+    pointsTotal = pointsColorBonus + pointsColumnBonus + pointsJokerBonus - pointsStarPenalty;
+    pointsDOM.pointTotal.innerHTML = "T = " + pointsTotal;
+}
+
+function updateColorBonus(maxPoints) {
+    if (maxPoints) pointsColorBonus = pointsColorBonus + 5;
+    else pointsColorBonus = pointsColorBonus + 3;
+    pointsDOM.colorBonus.innerHTML = "B = " + pointsColorBonus;
+    updateTotalPoints();
+}
+
+function updateColumnBonus(column, maxPoints) {
+    if (maxPoints) pointsColumnBonus = pointsColumnBonus + columnRewards[0][column];
+    else pointsColumnBonus = pointsColumnBonus + columnRewards[1][column];
+    pointsDOM.columnBonus.innerHTML = "A-0 + " + pointsColumnBonus;
+    updateTotalPoints();
+}
+
+function updateJokerBonus(points) {
+    pointsJokerBonus = pointsJokerBonus - points;
+    pointsDOM.jokerBonus.innerHTML = "!(+1) + " + pointsJokerBonus;
+    updateTotalPoints();
+}
+
+function updateStarPenalty(stars) {
+    pointsStarPenalty = pointsStarPenalty - stars * 2;
+    pointsDOM.starPenalty.innerHTML = "S(-2) - " + pointsStarPenalty;
+    updateTotalPoints();
+}
+
+function winOrLoss(data) {
+    if (!data.hasOwnProperty("won")) return;
+    if (data.won) {
+        alert("CONGRATULATIONS! :) You won!");
+    } else {
+        alert("Condolences :( You lost...")
+    }
+}
+
+function handleDraw() {
+    alert("Congratulations! You are all winners!");
 }

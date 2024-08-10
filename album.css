@@ -1,20 +1,28 @@
 body {
-    padding: 0;
+    padding: 40px 0;
     margin: 0;
     display: flex;
     flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
     row-gap: 100px;
+    background-color: #28282B;
+}
+
+.section-padding {
+    background-color: white;
+    border-radius: 20px;
+    width: 1044px;
+    padding: 20px;
 }
 
 .section {
     position: relative;
-    margin: auto;
-    width: 1044px;
+    width: 100%;
     display: flex;
     flex-flow: column nowrap;
     box-sizing: border-box;
     border-right: 4px solid #F26A8D;
-    background-color: white;
 }
 
 .section-name {
@@ -32,7 +40,7 @@ body {
 .album {
     position: relative;
     width: 100%;
-    max-height: 450px;
+    max-height: 550px;
     overflow: auto;
     display: flex;
     flex-flow: row wrap;
@@ -50,7 +58,7 @@ body {
 .album-photo {
     position: relative;
     width: 500px;
-    height: 400px;
+    height: 500px;
     overflow: hidden;
     padding: 10px;
     border: 3px solid #F26A8D;
@@ -64,6 +72,27 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+    z-index: 1;
+}
+
+.album-photo::after {
+    content: "💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕";
+    position: absolute;
+    left: -10%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid red;
+    width: max-content;
+}
+
+.album-photo::before {
+    content: "💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕💕";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    border: 1px solid red;
+    width: max-content;
 }
 
 .player {
@@ -72,7 +101,7 @@ body {
     column-gap: 5px;
     align-items: center;
     box-sizing: border-box;
-    padding: 5px;
+    padding: 10px;
 }
 
 .player-title {
@@ -109,4 +138,110 @@ body {
 
 .restart:after {
     content: "Restart"
+}
+
+.heart-stripe {
+    position: relative;
+    width: 1000px;
+    height: 1.5em;
+    line-height: 1.5em;
+    overflow: hidden;
+    text-align: center;
+}
+
+@media only screen and (max-width: 1200px) {
+    .section-padding {
+        width: 844px;
+    }
+
+    .album {
+        max-height: 450px;
+    }
+
+    .album-photo {
+        height: 400px;
+        width: 400px;
+    }
+
+    .heart-stripe {
+        width: 800px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .section-padding {
+        width: 644px;
+    }
+
+    .album {
+        max-height: 350px;
+    }
+
+    .album-photo {
+        height: 300px;
+        width: 300px;
+    }
+
+    .heart-stripe {
+        width: 600px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .section-padding {
+        width: 544px;
+    }
+
+    .album {
+        max-height: 300px;
+    }
+
+    .album-photo {
+        height: 250px;
+        width: 250px;
+    }
+
+    .heart-stripe {
+        width: 500px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .section-padding {
+        width: 444px;
+    }
+
+    .album {
+        max-height: 250px;
+    }
+
+    .album-photo {
+        height: 200px;
+        width: 200px;
+    }
+
+    .heart-stripe {
+        width: 400px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .section-padding {
+        width: 344px;
+    }
+
+    .album {
+        max-height: 250px;
+    }
+
+    .album-photo {
+        height: 150px;
+        width: 150px;
+        padding: 5px;
+        border-radius: 10px;
+    }
+
+    .heart-stripe {
+        width: 300px;
+    }
 }
