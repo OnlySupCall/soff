@@ -191,7 +191,7 @@
     box-sizing: border-box;
     border-radius: 20px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     font-family: Playwrite;
     font-size: 1em;
@@ -340,6 +340,47 @@
     .tile {
         border-radius: 10px;
     }
+
+    .dice>div {
+        border-radius: 10px;
+    }
+
+    .remaining-jokers {
+        row-gap: 4px;
+    }
+
+    .overview {
+        row-gap: 2px;
+    }
+
+    .overview-points {
+        padding: 3px;
+        border-radius: 10px;
+    }
+
+    .column-names>div, .column-points>div {
+        font-size: 1em;
+    }
+
+    .overview-colors>div {
+        font-size: 1em;
+    }
+
+    .overview-points {
+        font-size: 0.8em;
+    }
+
+    .remaining-jokers>div {
+        font-size: 1em;
+    }
+
+    .number-dye {
+        font-size: 0.7em;
+    }
+
+    .game-window button {
+        font-size: 0.7em;
+    }
 }
 
 @media only screen and (max-width: 1100px) {
@@ -352,6 +393,42 @@
     .game-window {
         width: 600px;
     }
+
+    .remaining-jokers {
+        row-gap: 4px;
+    }
+
+    .overview {
+        row-gap: 2px;
+    }
+
+    .overview-points {
+        padding: 3px;
+    }
+
+    .column-names>div, .column-points>div {
+        font-size: 0.5em;
+    }
+
+    .overview-colors>div {
+        font-size: 0.5em;
+    }
+
+    .overview-points {
+        font-size: 0.35em;
+    }
+
+    .remaining-jokers>div {
+        font-size: 0.5em;
+    }
+
+    .number-dye {
+        font-size: 0.4em;
+    }
+
+    .game-window button {
+        font-size: 0.4em;
+    }
 }
 
 @media only screen and (max-width: 700px) {
@@ -363,30 +440,6 @@
 @media only screen and (max-width: 600px) {
     .game-window {
         width: 500px;
-    }
-
-    .column-names>div, .column-points>div {
-        font-size: 1em;
-    }
-
-    .overview-colors>div {
-        font-size: 1em;
-    }
-
-    .overview-points {
-        font-size: 0.7em;
-    }
-
-    .remaining-jokers>div {
-        font-size: 1em;
-    }
-
-    .number-dye {
-        font-size: 0.8em;
-    }
-
-    .game-window button {
-        font-size: 0.8em;
     }
 }
 
