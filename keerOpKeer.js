@@ -1,15 +1,27 @@
-let areDiceThrown = true;
-let areDiceLocked = true;
+let dice = setupDice();
+let diceValues = [];
+let selectedDice = {};
+let unavailableDice = null;
+
+let isOnDiceTurn = false;
+
+let canThrowDice = false;
+
+let disableTiles = true;
+
 let colorDye = null;
 let numberDye = null;
-let number = 4;
-let color = "red";
-let dice = setupDice();
-let diceValues = ["green", "blue", "orange", 1, 5, 3];
+let number = null;
+let color = null;
+
 let crossedMatrix = setupCrossedMatrix();
 let crossedTiles = [];
 
 let selectedTiles = [];
+let selectedTilesDOM = [];
+
+let columnsDOM = setupColumns();
+let colorsDOM = setupColors();
 
 const ws = new WebSocket("ws://localhost:8082");
 ws.addEventListener("open", () => {
@@ -21,16 +33,84 @@ ws.addEventListener("message", message => {
     let data = JSON.parse(message.data);
 
     switch (data.type) {
-        case "command":
-            handleCommand(data);
+        case 0:
+            startGame(data);
+            break;
+        case 2:
+            receiveDice(data);
+            break;
+        case 3:
+            receiveDice(data);
+            break;
+        case 4:
+            receiveTurnResponse(data);
+            break;
+        case 5:
+            startTurn(data);
+            break;
+        case 6:
+            canThrowDice = true;
+            resetDice();
+            enableDice();
+            break;
+        case 7:
+            resetDice();
+            break;
+        case 8:
+            crossColumn(data);
+            break;
+        case 9:
+            circleColumn(data);
+            break;
+        case 10:
+            crossColor(data);
+            break;
+        case 11:
+            circleColor(data);
+            break;
     }
 });
 
-function handleCommand(data) {
-    switch(data.command) {
-        case "receiveDice":
-            receiveDice(data);
+function joinQueue() {
+    let message = {type: 0};
+    ws.send(JSON.stringify(message));
+}
+
+function startGame(data) {
+    if (data.isOnTurn) {
+        enableDice();
+        canThrowDice = true;
+    } else {
+        disableDice();
+        canThrowDice = false;
     }
+}
+
+function startTurn(data) {
+    if (!data.hasOwnProperty("unavailableDice")) return;
+
+    if (data.unavailableDice != null) {
+        dice[data.unavailableDice.color].classList.add("unavailable-dye");
+        dice[data.unavailableDice.number].classList.add("unavailable-dye");
+    }
+
+    unavailableDice = data.unavailableDice;
+
+    disableTiles = false;
+    enableDice();
+}
+
+function diceClick(dye) {
+    if (canThrowDice) throwDice();
+    else {
+        selectDye(dye);
+    }
+}
+
+function throwDice() {
+    canThrowDice = false;
+    let message = {type: 2};
+    ws.send(JSON.stringify(message));
 }
 
 function receiveDice(data) {
@@ -42,6 +122,55 @@ function receiveDice(data) {
     for (let i = 3; i < 6; i++) {
         diceValues[i] = data.diceValues[i]
         dice[i].innerHTML = diceValues[i];
+    }
+
+    disableTiles = false;
+}
+
+function selectDye(dye) {
+    if (dye.classList.contains("number-dye")) {
+        if (numberDye != null) {
+            numberDye.classList.remove("selected-dye");
+        }
+        numberDye = dye;
+        numberDye.classList.add("selected-dye");
+        for (let i = 3; i < 6; i++) {
+            if (dice[i] === numberDye) {
+                number = diceValues[i];
+                selectedDice.number = i;
+            }
+        }
+    } else {
+        if (colorDye != null) {
+            colorDye.classList.remove("selected-dye");
+        }
+        colorDye = dye;
+        colorDye.classList.add("selected-dye");
+        for (let i = 0; i < 3; i++) {
+            if (dice[i] === colorDye) {
+                color = diceValues[i];
+                selectedDice.color = i;
+            }
+        }
+    }
+
+    console.log(number);
+    console.log(color);
+    console.log('\n');
+}
+
+function receiveTurnResponse(data) {
+    if (!data.hasOwnProperty("isValidTurn")) return;
+
+    if (data.isValidTurn === true) {
+        clearDyeSelection();
+        crossTileSelection();
+    } else {
+        clearDyeSelection();
+        clearTileSelection();
+
+        enableDice();
+        disableTiles = false;
     }
 }
 
@@ -65,50 +194,54 @@ function setupDice() {
     return dice;
 }
 
-function throwDice() {
-    areDiceThrown = true;
-    let message = {"type": "command", "command": "throwDice"};
-    ws.send(JSON.stringify(message));
-}
+function setupColumns() {
+    let columns = [[], []];
 
-function selectDye(dye) {
-    if (dye.classList.contains("number-dye")) {
-        if (numberDye != null) {
-            numberDye.classList.remove("selected");
-        }
-        numberDye = dye;
-        numberDye.classList.add("selected");
-    } else {
-        if (colorDye != null) {
-            colorDye.classList.remove("selected");
-        }
-        colorDye = dye;
-        colorDye.classList.add("selected");
+    for (let i = 0; i < 15; i++) {
+        columns[0].push(document.getElementById("maxCol" + i));
     }
+
+    for (let i = 0; i < 15; i++) {
+        columns[1].push(document.getElementById("col" + i));
+    }
+
+    return columns;
 }
 
-function lockDyeChoice() {
-
+function setupColors() {
+    let colorsDOM = {};
+    colorsDOM["colorMax-green"] = document.getElementById("colorMax-green");
+    colorsDOM["colorMax-yellow"] = document.getElementById("colorMax-yellow");
+    colorsDOM["colorMax-blue"] = document.getElementById("colorMax-blue");
+    colorsDOM["colorMax-red"] = document.getElementById("colorMax-red");
+    colorsDOM["colorMax-orange"] = document.getElementById("colorMax-orange");
+    colorsDOM["color-green"] = document.getElementById("color-green");
+    colorsDOM["color-yellow"] = document.getElementById("color-yellow");
+    colorsDOM["color-blue"] = document.getElementById("color-blue");
+    colorsDOM["color-red"] = document.getElementById("color-red");
+    colorsDOM["color-orange"] = document.getElementById("color-orange");
 }
 
 function selectTile(tile) {
+    if (disableTiles) return;
+
     let coords = {"x": parseInt(tile.dataset.x), "y": parseInt(tile.dataset.y)};
 
-    if (selectedTiles.includes(coords) || selectedTiles.length > number || !tile.classList.contains("tile-" + color)) return;
+    if (selectedTiles.includes(coords) || selectedTiles.length >= number || !tile.classList.contains("tile-" + color) || tile.classList.contains("tile-crossed")) return;
 
-    if (selectedTiles.length == 0) {
-        if (coords.x == 7) {
+    if (selectedTiles.length === 0) {
+        if (coords.x === 7) {
             selectedTiles.push(coords);
+            selectedTilesDOM.push(tile);
             tile.classList.add("tile-selected");
             tile.setAttribute("onclick", "deselectTile(this)");
             return;
         }
 
-        console.log("Passed");
-
         for (let crossedTile of crossedTiles) {
             if (isAdjacent(coords, crossedTile)) {
                 selectedTiles.push(coords);
+                selectedTilesDOM.push(tile);
                 tile.classList.add("tile-selected");
                 tile.setAttribute("onclick", "deselectTile(this)");
                 return;
@@ -121,6 +254,7 @@ function selectTile(tile) {
     for (let selectedTile of selectedTiles) {
         if (isAdjacent(coords, selectedTile)) {
             selectedTiles.push(coords);
+            selectedTilesDOM.push(tile);
             tile.classList.add("tile-selected");
             tile.setAttribute("onclick", "deselectTile(this)");
             return;
@@ -129,25 +263,128 @@ function selectTile(tile) {
 }
 
 function deselectTile(tile) {
-    let coords = {"x": parseInt(tile.dataset.x), "y": parseInt(tile.dataset.y)};
-    for (let i = 0; i < selectedTiles.length; i++) {
-        if (selectedTiles[i].x == coords.x && selectedTiles[i].y == coords.y) {
-            selectedTiles.splice(i, 1);
-            tile.classList.remove("tile-selected");
-            tile.setAttribute("onclick", "selectTile(this)");
-            return;
-        }
-    }
+    if (disableTiles) return;
+
+    let index = selectedTilesDOM.indexOf(tile);
+    if (index === -1) return;
+
+    tile.classList.remove("tile-selected");
+    tile.setAttribute("onclick", "selectTile(this)");
+
+    selectedTilesDOM.splice(index, 1);
+    selectedTiles.splice(index, 1);
 }
 
 function lockTiles() {
-    if (selectedTiles.length != number) return;
+    if (selectedTiles.length !== number) return;
     let message = {"type": "command", "command": "lockTiles", "selectedTiles": selectedTiles};
     ws.send(JSON.stringify(message));
 }
 
+function endTurn() {
+    if (selectedTiles.length !== number && selectedTiles.length !== 0) return;
+
+    disableTiles = true;
+    disableDice();
+
+    let message = {type: 3, selectedDice: selectedDice, selectedTiles: selectedTiles};
+    ws.send(JSON.stringify(message));
+}
+
 function isAdjacent(tile1, tile2) {
-    if (tile1.x == tile2.x && tile1.y == tile2.y - 1 || tile1.y == tile2.y + 1) return true;
-    if (tile1.y == tile2.y && tile1.x == tile2.x - 1 || tile1.x == tile2.x + 1) return true;
+    if (tile1.x == tile2.x && (tile1.y == tile2.y - 1 || tile1.y == tile2.y + 1)) return true;
+    if (tile1.y == tile2.y && (tile1.x == tile2.x - 1 || tile1.x == tile2.x + 1)) return true;
     return false;
+}
+
+function clearDyeSelection() {
+    dice[selectedDice.color].classList.remove("selected-dye");
+    dice[selectedDice.number].classList.remove("selected-dye");
+
+    selectedDice = {};
+    colorDye = null;
+    color = null;
+    numberDye = null;
+    number = null;
+}
+
+function clearTileSelection() {
+    for (let tile of selectedTilesDOM) {
+        tile.classList.remove("tile-selected");
+    }
+
+    selectedTiles = [];
+    selectedTilesDOM = [];
+}
+
+function crossTileSelection() {
+    for (let tile of selectedTilesDOM) {
+        tile.classList.remove("tile-selected");
+        tile.classList.add("tile-crossed");
+    }
+
+    crossedTiles.push(...selectedTiles);
+    selectedTiles = [];
+    selectedTilesDOM = [];
+}
+
+function disableDice() {
+    for (let dye of dice) dye.classList.add("disabled-dye");
+}
+
+function enableDice() {
+    for (let dye of dice) dye.classList.remove("disabled-dye");
+}
+
+function resetDice() {
+    for (let i = 0; i < 3; i++) {
+        dice[i].classList.remove(diceValues[i]);
+    }
+    for (let i = 3; i < 6; i++) {
+        dice[i].innerHTML = "";
+    }
+
+    if (unavailableDice != null) {
+        dice[unavailableDice.color].classList.remove("unavailable-dye");
+        dice[unavailableDice.number].classList.remove("unavailable-dye");
+        unavailableDice = null;
+    }
+
+    selectedDice = {};
+    colorDye = null;
+    color = null;
+    numberDye = null;
+    number = null;
+}
+
+function crossColumn(data) {
+    if (!data.hasOwnProperty("column") || !data.hasOwnProperty("maxPoints")) return;
+
+    if (data.maxPoints) {
+        columnsDOM[0][data.column].classList.add("tile-crossed");
+    } else {
+        columnsDOM[1][data.column].classList.add("tile-crossed");
+    }
+}
+
+function circleColumn(data) {
+    if (!data.hasOwnProperty("column")) return;
+
+    columnsDOM[0][data.column].classList.add("tile-circled");
+}
+
+function crossColor(data) {
+    if (!data.hasOwnProperty("color") || !data.hasOwnProperty("maxPoints")) return;
+
+    if (data.maxPoints) {
+        colorsDOM["colorMax-" + data.color].classList.add("tile-crossed");
+    } else {
+        colorsDOM["color-" + data.color].classList.add("tile-crossed");
+    }
+}
+
+function circleColor(data) {
+    if (!data.hasOwnProperty("color")) return;
+
+    colorsDOM["colorMax-" + data.color].classList.add("tile-circled");
 }

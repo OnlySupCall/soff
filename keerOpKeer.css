@@ -238,6 +238,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .color-dye:after {
@@ -272,4 +273,24 @@
     font-family: Playwrite;
     font-size: 1.2em;
     font-weight: bold;
+}
+
+.dice .selected-dye {
+    border: 4px solid #A5DC61; !important
+}
+
+.dice .unavailable-dye {
+    border: 4px solid #FF4958;
+    background-color: #ffdbdf;
+    color: #FF4958;
+    cursor: default;
+    pointer-events: none;
+}
+
+.dice .disabled-dye {
+    border: 4px solid #464646;
+    background-color: lightgray;
+    color: #464646;
+    cursor: default;
+    pointer-events: none;
 }

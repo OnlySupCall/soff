@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../keer_op_keer_server/.idea/keer_op_keer_server.iml" filepath="$PROJECT_DIR$/../keer_op_keer_server/.idea/keer_op_keer_server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/soff.iml" filepath="$PROJECT_DIR$/.idea/soff.iml" />
     </modules>
   </component>
