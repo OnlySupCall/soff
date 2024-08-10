@@ -185,7 +185,7 @@
 }
 
 .overview-points {
-    flex-basis: 100%;
+    flex: 1;
     aspect-ratio: 2/1;
     border: 1px solid black;
     box-sizing: border-box;
@@ -196,7 +196,6 @@
     font-family: Playwrite;
     font-size: 1em;
     font-weight: bold;
-    padding: 5px;
 }
 
 .remaining-jokers {
