@@ -220,6 +220,8 @@ function setupColors() {
     colorsDOM["color-blue"] = document.getElementById("color-blue");
     colorsDOM["color-red"] = document.getElementById("color-red");
     colorsDOM["color-orange"] = document.getElementById("color-orange");
+
+    return colorsDOM;
 }
 
 function selectTile(tile) {
