@@ -187,8 +187,8 @@
 .overview-points {
     flex: 1;
     aspect-ratio: 2/1;
-    border: 1px solid black;
     box-sizing: border-box;
+    border: 1px solid black;
     border-radius: 20px;
     display: flex;
     justify-content: center;
