@@ -43,6 +43,8 @@ ws.addEventListener("open", () => {
     console.log("The connection is open!");
 })
 
+const nesto = 0;
+
 ws.addEventListener("message", message => {
     console.log(message);
     let data = JSON.parse(message.data);
