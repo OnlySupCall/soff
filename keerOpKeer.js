@@ -43,6 +43,10 @@ ws.addEventListener("open", () => {
     console.log("The connection is open!");
 })
 
+ws.onerror = (error) => {
+    console.error('WebSocket error:', error);
+};
+
 const nesto = 0;
 
 ws.addEventListener("message", message => {
