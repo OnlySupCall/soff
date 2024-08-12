@@ -38,7 +38,7 @@ const columnRewards = [
     [3, 2, 2, 2, 1, 1, 1, 0, 1, 1, 1, 2, 2, 2, 3]
 ];
 
-const ws = new WebSocket("wss://178.223.211.48:443");
+const ws = new WebSocket("wss://178.223.211.48:443", "echo-protocol");
 ws.addEventListener("open", () => {
     console.log("The connection is open!");
 })
