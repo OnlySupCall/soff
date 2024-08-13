@@ -1,3 +1,7 @@
+function toggleExtend(button) {
+    button.parentNode.parentNode.children[2].classList.toggle("extended");
+}
+
 function play(button) {
     button.parentNode.children[1].play();
     button.classList.remove("play");

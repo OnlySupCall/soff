@@ -7,6 +7,12 @@ body {
     align-items: center;
     row-gap: 100px;
     background-color: #28282B;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .section-padding {
@@ -32,8 +38,9 @@ body {
 }
 
 .section-thought {
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-family: Playwrite;
+    font-weight: lighter;
     margin: 10px 20px 20px 0;
 }
 
@@ -149,18 +156,57 @@ body {
     text-align: center;
 }
 
+h1.main {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: white;
+    color: #FF4958;
+    font-family: Playwrite;
+    font-size: 2.5em;
+    border-top: 4px solid #FF4958;
+    border-bottom: 4px solid #FF4958;
+    margin: 40px 0 0 0;
+}
+
+p.main {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    margin: -60px 0 0 0;
+    padding: 20px calc(50% - 522px);
+    background-color: white;
+    font-family: Playwrite;
+    font-weight: lighter;
+    font-size: 1.5em;
+    border-top: 4px solid #FF4958;
+    border-bottom: 4px solid #FF4958;
+}
+
+.extend {
+    outline: none;
+    border: none;
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+.extended {
+    max-height: unset;
+}
+
 @media only screen and (max-width: 1200px) {
     .section-padding {
-        width: 844px;
+        width: 944px;
     }
 
     .album {
-        max-height: 450px;
+        max-height: 500px;
     }
 
     .album-photo {
-        height: 400px;
-        width: 400px;
+        height: 450px;
+        width: 450px;
     }
 
     .heart-stripe {
@@ -168,7 +214,26 @@ body {
     }
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1050px) {
+    .section-padding {
+        width: 744px;
+    }
+
+    .album {
+        max-height: 400px;
+    }
+
+    .album-photo {
+        height: 350px;
+        width: 350px;
+    }
+
+    .heart-stripe {
+        width: 600px;
+    }
+}
+
+@media only screen and (max-width: 850px) {
     .section-padding {
         width: 644px;
     }
@@ -183,32 +248,13 @@ body {
     }
 
     .heart-stripe {
-        width: 600px;
-    }
-}
-
-@media only screen and (max-width: 800px) {
-    .section-padding {
-        width: 544px;
-    }
-
-    .album {
-        max-height: 300px;
-    }
-
-    .album-photo {
-        height: 250px;
-        width: 250px;
-    }
-
-    .heart-stripe {
         width: 500px;
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 650px) {
     .section-padding {
-        width: 444px;
+        width: 544px;
     }
 
     .section-name {
@@ -220,12 +266,12 @@ body {
     }
 
     .album {
-        max-height: 250px;
+        max-height: 300px;
     }
 
     .album-photo {
-        height: 200px;
-        width: 200px;
+        height: 250px;
+        width: 250px;
     }
 
     .heart-stripe {
