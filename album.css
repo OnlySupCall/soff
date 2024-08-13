@@ -191,7 +191,7 @@ p.main {
     border-radius: 5px;
 }
 
-.extended {
+div.extended {
     max-height: unset; !important
 }
 
@@ -212,6 +212,10 @@ p.main {
     .heart-stripe {
         width: 800px;
     }
+
+    .extended {
+        max-height: unset; !important
+    }
 }
 
 @media only screen and (max-width: 1050px) {
@@ -231,6 +235,10 @@ p.main {
     .heart-stripe {
         width: 600px;
     }
+
+    .extended {
+        max-height: unset; !important
+    }
 }
 
 @media only screen and (max-width: 850px) {
@@ -249,6 +257,10 @@ p.main {
 
     .heart-stripe {
         width: 500px;
+    }
+
+    .extended {
+        max-height: unset; !important
     }
 }
 
@@ -285,6 +297,10 @@ p.main {
     .player>button {
         font-size: 1.1em;
     }
+
+    .extended {
+        max-height: unset; !important
+    }
 }
 
 @media only screen and (max-width: 400px) {
@@ -305,5 +321,9 @@ p.main {
 
     .heart-stripe {
         width: 300px;
+    }
+
+    .extended {
+        max-height: unset; !important
     }
 }
